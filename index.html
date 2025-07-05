@@ -1,0 +1,93 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Message</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      padding: 80px;
+      background: white;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 36px; /* Bigger font */
+      font-weight: bold;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .footer {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+ 
+  <div class="container">
+
+        <p>Thanks for stopping by!</p>
+
+        <p>A click on this site makes a coder smile… imagine what a few more could do.  
+        <span role="img" aria-label="winking eye">😉</span>
+        </p>
+
+        <p>Wishing you a great rest of your day!</p>
+    </div>
+
+  <script>
+    // Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyA6FOahPr_40N1WS0S-VY_ssQRefwJt9c8",
+      authDomain: "messagetracker-fced6.firebaseapp.com",
+      databaseURL: "https://messagetracker-fced6-default-rtdb.firebaseio.com",
+      projectId: "messagetracker-fced6",
+      storageBucket: "messagetracker-fced6.appspot.com",
+      messagingSenderId: "770318035535",
+      appId: "1:770318035535:web:c8b802e29e11c59e44183a",
+      measurementId: "G-YXQNQSL5HR"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Fetch IP data
+    fetch("https://ipapi.co/json")
+      .then(response => response.json())
+      .then(data => {
+        const logData = {
+          ip: data.ip,
+          city: data.city,
+          region: data.region,
+          country: data.country_name,
+          org: data.org,
+          timezone: data.timezone,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        };
+        db.ref("ip_logs_spp").push(logData);
+      });
+  </script>
+</body>
+</html>
